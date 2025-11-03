@@ -12,13 +12,13 @@ public static class EnumerableHelpers
         }
     }
 
-    public static IEnumerable<Pet> AllPetsThatSatisfy(this IList<Pet> pets, Func<Pet, bool> condition)
+    public static IEnumerable<TItem> AllItemsThat<TItem>(this IEnumerable<TItem> items, Func<TItem, bool> condition)
     {
-        foreach (var pet in pets)
+        foreach (var item in items)
         {
-            if (condition(pet))
+            if (condition(item))
             {
-                yield return pet;
+                yield return item;
             }
         }
     }
