@@ -12,7 +12,7 @@ public static class EnumerableHelpers
         }
     }
 
-    public static IEnumerable<TItem> AllItemsThat<TItem>(this IEnumerable<TItem> items, Func<TItem, bool> condition)
+    public static IEnumerable<TItem> AllItemsThat<TItem>(this IEnumerable<TItem> items, Predicate<TItem> condition)
     {
         foreach (var item in items)
         {
@@ -22,4 +22,19 @@ public static class EnumerableHelpers
             }
         }
     }
+    public static IEnumerable<TItem> AllItemsThat<TItem>(this IEnumerable<TItem> items, Criteria<TItem> criteria)
+    {
+        foreach (var item in items)
+        {
+            if (criteria.IsSatisfiedBy(item))
+            {
+                yield return item;
+            }
+        }
+    }
+}
+
+public interface Criteria<TItem>
+{
+    bool IsSatisfiedBy(TItem item);
 }
