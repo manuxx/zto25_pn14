@@ -14,15 +14,9 @@ public static class EnumerableHelpers
 
     public static IEnumerable<TItem> AllItemsThat<TItem>(this IEnumerable<TItem> items, Predicate<TItem> condition)
     {
-        foreach (var item in items)
-        {
-            if (condition(item))
-            {
-                yield return item;
-            }
-        }
+        return items.AllItemsThat(new AnonymousCriteria<TItem>(condition));
     }
-    public static IEnumerable<TItem> AllItemsThat<TItem>(this IEnumerable<TItem> items, Criteria<TItem> criteria)
+    public static IEnumerable<TItem> AllItemsThat<TItem>(this IEnumerable<TItem> items, ICriteria<TItem> criteria)
     {
         foreach (var item in items)
         {
@@ -34,7 +28,7 @@ public static class EnumerableHelpers
     }
 }
 
-public interface Criteria<TItem>
+public interface ICriteria<TItem>
 {
     bool IsSatisfiedBy(TItem item);
 }
